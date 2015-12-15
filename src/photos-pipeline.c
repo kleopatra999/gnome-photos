@@ -25,6 +25,7 @@
 
 #include <glib.h>
 
+#include "egg-counter.h"
 #include "photos-debug.h"
 #include "photos-operation-insta-common.h"
 #include "photos-pipeline.h"
@@ -58,6 +59,7 @@ static void photos_pipeline_async_initable_iface_init (GAsyncInitableIface *ifac
 
 G_DEFINE_TYPE_EXTENDED (PhotosPipeline, photos_pipeline, G_TYPE_OBJECT, 0,
                         G_IMPLEMENT_INTERFACE (G_TYPE_ASYNC_INITABLE, photos_pipeline_async_initable_iface_init));
+EGG_DEFINE_COUNTER (instances, "PhotosPipeline", "Instances", "Number of PhotosPipeline instances");
 
 
 static gchar *
@@ -159,6 +161,8 @@ photos_pipeline_finalize (GObject *object)
   g_free (self->uri);
 
   G_OBJECT_CLASS (photos_pipeline_parent_class)->finalize (object);
+
+  EGG_COUNTER_DEC (instances);
 }
 
 
@@ -187,6 +191,8 @@ photos_pipeline_set_property (GObject *object, guint prop_id, const GValue *valu
 static void
 photos_pipeline_init (PhotosPipeline *self)
 {
+  EGG_COUNTER_INC (instances);
+
   self->hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
   self->history = g_queue_new ();
 }
