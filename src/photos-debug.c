@@ -38,6 +38,7 @@ photos_debug_init (void)
     {
       { "dlna", PHOTOS_DEBUG_DLNA },
       { "gegl", PHOTOS_DEBUG_GEGL },
+      { "memory", PHOTOS_DEBUG_MEMORY },
       { "network", PHOTOS_DEBUG_NETWORK },
       { "tracker", PHOTOS_DEBUG_TRACKER }
     };

@@ -29,8 +29,9 @@ typedef enum
 {
   PHOTOS_DEBUG_DLNA       = 1 << 0,
   PHOTOS_DEBUG_GEGL       = 1 << 1,
-  PHOTOS_DEBUG_NETWORK    = 1 << 2,
-  PHOTOS_DEBUG_TRACKER    = 1 << 3
+  PHOTOS_DEBUG_MEMORY     = 1 << 2,
+  PHOTOS_DEBUG_NETWORK    = 1 << 3,
+  PHOTOS_DEBUG_TRACKER    = 1 << 4
 } PhotosDebugFlags;
 
 void        photos_debug_init          (void);

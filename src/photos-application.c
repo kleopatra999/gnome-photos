@@ -34,9 +34,11 @@
 #include <grilo.h>
 #include <libgnome-desktop/gnome-bg.h>
 
+#include "egg-counter.h"
 #include "photos-application.h"
 #include "photos-base-item.h"
 #include "photos-camera-cache.h"
+#include "photos-debug.h"
 #include "photos-dlna-renderers-dialog.h"
 #include "photos-export-dialog.h"
 #include "photos-filterable.h"
@@ -313,6 +315,16 @@ photos_application_actions_update (PhotosApplication *self)
             && mode == PHOTOS_WINDOW_MODE_PREVIEW
             && photos_base_item_can_edit (item));
   g_simple_action_set_enabled (priv->edit_action, enable);
+}
+
+
+static void
+photos_application_counter_arena_foreach (EggCounter *counter)
+{
+  gint64 count;
+
+  count = egg_counter_get (counter);
+  photos_debug (PHOTOS_DEBUG_MEMORY, "%-32s: %-15s: %15" G_GINT64_FORMAT, counter->category, counter->name, count);
 }
 
 
@@ -1594,6 +1606,7 @@ static void
 photos_application_finalize (GObject *object)
 {
   PhotosApplication *self = PHOTOS_APPLICATION (object);
+  EggCounterArena *arena;
 
   g_assert (self->priv->create_miners_count == 0);
 
@@ -1601,6 +1614,9 @@ photos_application_finalize (GObject *object)
     gegl_exit ();
 
   G_OBJECT_CLASS (photos_application_parent_class)->finalize (object);
+
+  arena = egg_counter_arena_get_default ();
+  egg_counter_arena_foreach (arena, (EggCounterForeachFunc) photos_application_counter_arena_foreach, NULL);
 }
 
 
