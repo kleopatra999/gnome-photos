@@ -35,6 +35,8 @@ nodist_gnome_photos_SOURCES = \
 	$(NULL)
 
 gnome_photos_SOURCES = \
+	egg-counter.c \
+	egg-counter.h \
 	gegl-gtk-enums.h \
 	gegl-gtk-view.c \
 	gegl-gtk-view.h \
@@ -319,6 +321,8 @@ gnome_photos_LDADD = \
 	$(PNG_LIBS) \
 	$(TRACKER_LIBS) \
 	$(LIBM) \
+	$(LIBRT) \
+	-ldl \
 	$(top_builddir)/libgd/libgd.la \
 	$(NULL)
 

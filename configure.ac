@@ -77,6 +77,9 @@ if test "$have_langinfo_measurement" = "yes"; then
             [Define if _NL_MEASUREMENT_MEASUREMENT is available])
 fi
 
+AC_CHECK_FUNCS([shm_open], [LIBRT=], [AC_CHECK_LIB([rt], [shm_open], [LIBRT=-lrt], [LIBRT=])])
+AC_SUBST(LIBRT)
+
 PKG_CHECK_MODULES(BABL, [babl])
 PKG_CHECK_MODULES(CAIRO, [cairo >= $CAIRO_MIN_VERSION cairo-gobject])
 PKG_CHECK_MODULES(GFBGRAPH, [libgfbgraph-0.2 >= $GFBGRAPH_MIN_VERSION])
