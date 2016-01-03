@@ -1013,7 +1013,7 @@ photos_base_item_save_guess_sizes_from_buffer (GeglBuffer *buffer,
   GeglNode *buffer_source;
   GeglNode *graph;
   GeglNode *guess_sizes;
-  gsize sizes[2];
+  guint64 sizes[2];
 
   graph = gegl_node_new ();
   buffer_source = gegl_node_new_child (graph, "operation", "gegl:buffer-source", "buffer", buffer, NULL);
@@ -1038,9 +1038,9 @@ photos_base_item_save_guess_sizes_from_buffer (GeglBuffer *buffer,
 
   gegl_node_get (guess_sizes, "size", &sizes[0], "size-1", &sizes[1], NULL);
   if (out_size != NULL)
-    *out_size = sizes[0];
+    *out_size = (gsize) sizes[0];
   if (out_size_1 != NULL)
-    *out_size_1 = sizes[1];
+    *out_size_1 = (gsize) sizes[1];
 
   g_object_unref (graph);
 }
