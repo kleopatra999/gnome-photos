@@ -1,6 +1,6 @@
 /*
  * Photos - access, organize and share your photos on GNOME
- * Copyright © 2015 Red Hat, Inc.
+ * Copyright © 2015, 2016 Red Hat, Inc.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -101,7 +101,7 @@ photos_tool_class_init (PhotosToolClass *class)
 
 
 void
-photos_tool_activate (PhotosTool *self, PhotosBaseItem *item, GeglGtkView *view)
+photos_tool_activate (PhotosTool *self, PhotosBaseItem *item, PhotosImageView *view)
 {
   PHOTOS_TOOL_GET_CLASS (self)->activate (self, item, view);
 }
