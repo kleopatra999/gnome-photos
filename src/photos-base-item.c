@@ -2318,7 +2318,7 @@ photos_base_item_save_async (PhotosBaseItem *self,
   g_task_set_task_data (task, data, (GDestroyNotify) photos_base_item_save_data_free);
 
   graph = photos_pipeline_get_graph (priv->pipeline);
-  buffer = photos_utils_create_buffer_from_node (graph);
+  buffer = photos_utils_create_buffer_from_node (graph, NULL);
   photos_utils_buffer_zoom_async (buffer,
                                   zoom,
                                   cancellable,
@@ -2365,7 +2365,7 @@ photos_base_item_save_guess_sizes_async (PhotosBaseItem *self,
   g_return_if_fail (!gegl_processor_work (priv->processor, NULL));
 
   graph = photos_pipeline_get_graph (priv->pipeline);
-  buffer = photos_utils_create_buffer_from_node (graph);
+  buffer = photos_utils_create_buffer_from_node (graph, NULL);
 
   data = photos_base_item_save_data_new (NULL, buffer, priv->mime_type);
 
