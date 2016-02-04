@@ -857,6 +857,8 @@ photos_tool_crop_process (GObject *source_object, GAsyncResult *res, gpointer us
       goto out;
     }
 
+  photos_tool_crop_surface_create (self);
+
   zoom = photos_image_view_get_zoom (PHOTOS_IMAGE_VIEW (self->view));
   self->crop_height *= zoom;
   self->crop_width *= zoom;
@@ -922,7 +924,6 @@ photos_tool_crop_activate (PhotosTool *tool, PhotosBaseItem *item, PhotosImageVi
   g_return_if_fail (got_bbox_source);
 
   self->view = GTK_WIDGET (view);
-  photos_tool_crop_surface_create (self);
 
   if (photos_base_item_operation_get (item,
                                       "gegl:crop",
@@ -957,6 +958,7 @@ photos_tool_crop_activate (PhotosTool *tool, PhotosBaseItem *item, PhotosImageVi
     }
   else
     {
+      photos_tool_crop_surface_create (self);
       photos_tool_crop_init_crop (self);
     }
 
