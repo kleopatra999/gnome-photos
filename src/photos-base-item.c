@@ -914,9 +914,6 @@ photos_base_item_load_load_buffer (GObject *source_object, GAsyncResult *res, gp
 
   gegl_node_set (priv->buffer_source, "buffer", buffer, NULL);
 
-  g_clear_object (&priv->processor);
-  priv->processor = photos_pipeline_new_processor (priv->pipeline);
-
   photos_base_item_process_async (self, cancellable, photos_base_item_load_process, g_object_ref (task));
 
  out:
@@ -2233,12 +2230,17 @@ photos_base_item_process_async (PhotosBaseItem *self,
                                 GAsyncReadyCallback callback,
                                 gpointer user_data)
 {
+  PhotosBaseItemPrivate *priv;
   GTask *task;
 
   g_return_if_fail (PHOTOS_IS_BASE_ITEM (self));
+  priv = self->priv;
 
   task = g_task_new (self, cancellable, callback, user_data);
   g_task_set_source_tag (task, photos_base_item_process_async);
+
+  g_clear_object (&priv->processor);
+  priv->processor = photos_pipeline_new_processor (priv->pipeline);
 
   g_idle_add_full (G_PRIORITY_DEFAULT_IDLE, photos_base_item_process_idle, g_object_ref (task), g_object_unref);
   g_object_unref (task);
